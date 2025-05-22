@@ -6,8 +6,10 @@
 #include<cmath>
 #include<vector>
 #include<algorithm>
+#include<stdexcept>
+#include "../include/neuron.h"
 
-using std::vector, std::exp, std::copy;
+using std::vector, std::exp, std::copy, std::invalid_argument;
 
 /**
  * Compresses any integer to (0,1) where big negative numbers 
@@ -29,9 +31,9 @@ float sigmoid(int x) {
  * @param y - vector of integers.
  * @return dotProduct of x and y as a integer.
  */
-int dotProduct(vector<int> x, vector<int> y) {
+float dotProduct(vector<int> x, vector<float> y) {
     if (x.size() != y.size()) {
-        return -1;
+        throw invalid_argument("dotProduct: Vectors must be the same length.");
     }
 
     int xArr[x.size()];
@@ -41,53 +43,36 @@ int dotProduct(vector<int> x, vector<int> y) {
 
     int product = 0;
     for (int i = 0; i < sizeof(xArr) / sizeof(xArr[0]); i++) {
-        product = product + (xArr[i] * yArr[i]);
+        product += (xArr[i] * yArr[i]);
     }
 
     return product;
 }
 
-/**
- * Basic building block of a neural network. A neuron takes inputs,
- * does some math with them, and produces and output.
- * 
- * This is an implementation of a 2-input neuron.
- */
-class Neuron {
- private:
-    int bias;
-    vector<int> weights;
+Neuron::Neuron() {
+    this->bias = 0;
+    this->weights = {};
+}
 
- public:
-    Neuron(vector<int> weights, int bias) {
-        this->bias = bias;
-        this->weights = weights;
+Neuron::Neuron(vector<int> weights, int bias) {
+    this->bias = bias;
+    this->weights = weights;
+}
+
+std::string printList(vector<int> v) {
+    std::string output = "";
+
+    for (int i : v) {
+        output += i;
+        output += " ";
     }
 
-    /**
-     * Produces the output of neuron by multipying each input
-     * by a weight (dot product), adding the weighted inputs
-     * together with a bias, and sending it through an activation
-     * fucntion (sigmoid).
-     * 
-     * The process of passing inputs forward to get an output
-     * is known as feedforwarding.
-     * 
-     * @param inputs - vector of integers.
-     * @return feedforward value of inputs that have been passed through an activation function.
-     */
-    float feedForward(vector<int> inputs) {
-        return sigmoid(dotProduct(this->weights, inputs) + this->bias);
-    }
-};
+    return output;
+}
 
-int main() {
-    vector<int> weights = {0, 1};
-    int bias = 4;
-    vector<int> inputs = {2, 3};
-
-    Neuron n = Neuron(weights, bias);
-    float output = n.feedForward(inputs);
-    std::cout << output << std::endl;
-    return 0;
+float Neuron::feedForward(vector<float> inputs) {
+    std::cout << printList(this->weights) << std::endl;
+    std::cout << dotProduct(this->weights, inputs) << std::endl;
+    std::cout << dotProduct(this->weights, inputs) + this->bias << std::endl;
+    return sigmoid(dotProduct(this->weights, inputs) + this->bias);
 }
