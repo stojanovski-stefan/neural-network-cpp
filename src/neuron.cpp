@@ -59,20 +59,6 @@ Neuron::Neuron(vector<int> weights, int bias) {
     this->weights = weights;
 }
 
-std::string printList(vector<int> v) {
-    std::string output = "";
-
-    for (int i : v) {
-        output += i;
-        output += " ";
-    }
-
-    return output;
-}
-
 float Neuron::feedForward(vector<float> inputs) {
-    std::cout << printList(this->weights) << std::endl;
-    std::cout << dotProduct(this->weights, inputs) << std::endl;
-    std::cout << dotProduct(this->weights, inputs) + this->bias << std::endl;
     return sigmoid(dotProduct(this->weights, inputs) + this->bias);
 }
