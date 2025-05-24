@@ -20,28 +20,28 @@ using std::vector, std::exp, std::copy, std::invalid_argument;
  * @param x - integer to be compressed.
  * @return value of x passed through a sigmoid function (0,1).
  */
-float sigmoid(int x) {
+float sigmoid(float x) {
     return 1 / (1 + exp(-x));
 }
 
 /**
  * Calculates dot product of two vectors.
  * 
- * @param x - vector of integers.
- * @param y - vector of integers.
- * @return dotProduct of x and y as a integer.
+ * @param x - vector of floats.
+ * @param y - vector of floats.
+ * @return dotProduct of x and y as a float.
  */
-float dotProduct(vector<int> x, vector<float> y) {
+float dotProduct(vector<float> x, vector<float> y) {
     if (x.size() != y.size()) {
         throw invalid_argument("dotProduct: Vectors must be the same length.");
     }
 
-    int xArr[x.size()];
-    int yArr[y.size()];
+    float xArr[x.size()];
+    float yArr[y.size()];
     copy(x.begin(), x.end(), xArr);
     copy(y.begin(), y.end(), yArr);
 
-    int product = 0;
+    float product = 0.0;
     for (int i = 0; i < sizeof(xArr) / sizeof(xArr[0]); i++) {
         product += (xArr[i] * yArr[i]);
     }
@@ -54,7 +54,7 @@ Neuron::Neuron() {
     this->weights = {};
 }
 
-Neuron::Neuron(vector<int> weights, int bias) {
+Neuron::Neuron(vector<float> weights, float bias) {
     this->bias = bias;
     this->weights = weights;
 }

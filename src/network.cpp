@@ -13,8 +13,16 @@ using std::vector;
 
 
 Network::Network() {
-    this->weights = {0, 1};
-    this->bias = 0;
+    this->weights = {0.0, 1.0};
+    this->bias = 0.0;
+    this->h1 = Neuron(this->weights, this->bias);
+    this->h2 = Neuron(this->weights, this->bias);
+    this->o1 = Neuron(this->weights, this->bias);
+}
+
+Network::Network(float bias) {
+    this->weights = {0.0, 1.0};
+    this->bias = bias;
     this->h1 = Neuron(this->weights, this->bias);
     this->h2 = Neuron(this->weights, this->bias);
     this->o1 = Neuron(this->weights, this->bias);
@@ -28,7 +36,7 @@ float Network::feedForward(vector<float> inputs) {
 }
 
 int main() {
-    vector<float> inputs = {2, 3};
+    vector<float> inputs = {2.0, 3.0};
     Network net = Network();
     std::cout << net.feedForward(inputs) << std::endl;
     return 0;
