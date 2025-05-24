@@ -14,12 +14,12 @@
  */
 class Neuron {
  private:
-    int bias;
-    std::vector<int> weights;
+    float bias;
+    std::vector<float> weights;
 
  public:
     Neuron();
-    Neuron(std::vector<int> weights, int bias);
+    Neuron(std::vector<float> weights, float bias);
 
     /**
      * Produces the output of neuron by multipying each input
